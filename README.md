@@ -23,4 +23,5 @@ $ npx zenn init  # setup directory for Zenn
 
 ```sh
 npx zenn preview
+# 👀 Preview on http://localhost:8000
 ```
