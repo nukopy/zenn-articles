@@ -8,6 +8,21 @@ published: false
 
 この記事を読めば，Python のパッケージ管理を根本から理解できる．
 
+---
+
+## 読む記事
+
+- 1 にドキュメント，2 にドキュメント
+- [Python のパッケージ周りについて調べた時のメモ](http://replicity.hateblo.jp/entry/2017/08/13/155703)
+- [2020 年の Python パッケージ管理ベストプラクティス](https://qiita.com/sk217/items/43c994640f4843a18dbe)
+  - pipenv, poetry, pyflow の比較が分かりやすい
+- [python-poetry/poetry: issue - "pip install -e . equivalent"](https://github.com/python-poetry/poetry/issues/34)
+  - `poetry build` の仕組みを調べれば OK そう．
+- [（インターン向けに書いた）Python パッケージを作る方法](https://qiita.com/Ultra-grand-child/items/7717f823df5a30c27077)
+  - あんまり読む必要ないかも
+
+---
+
 ## この記事で扱うこと，扱わないもの
 
 ### 扱うこと
@@ -27,7 +42,12 @@ published: false
 - `setup.py` って何か知ってる
 - setuptools って何？
 - `pip install -e .` が何をするか分かる？
+  - "editable" の意味がよく分からん
+  - [ローカルプロジェクトインストール，editable モードインストール](https://pip.pypa.io/en/stable/reference/pip_install/#local-project-installs)
 - egg，wheel って何？
+  - [Wheel vs Egg](https://python-packaging-user-guide-ja.readthedocs.io/ja/latest/wheel_egg.html)
+- egg-info, dist-info
+  - [Python Eggs](http://peak.telecommunity.com/DevCenter/PythonEggs)
 - パッケージを公開する方法
   - pip
   - poetry
@@ -35,6 +55,122 @@ published: false
 ## エコシステムとは？
 
 〜〜〜を「エコシステム」と言ったりします．
+
+## pip install
+
+- [Local project installs](https://pip.pypa.io/en/stable/reference/pip_install/#local-project-installs)
+
+pip はローカルプロジェクトのインストールをサポートしている．`pip install` コマンドにローカルプロジェクトへの path を渡すことでローカルプロジェクトをインストールできる．
+
+- `pip install path/to/local/projects`
+
+ローカルプロジェクトのインストールには 2 つのモードがあり，
+それぞれ regular モード，editable モードと呼ばれる．
+
+regular モードでは，
+pip はプロジェクトディレクトリを一時的なディレクトリにコピーし，そこからプロジェクトのインストールを行う．
+
+editable モードは，基本的には `setuptools` の "development mode" と同じである．
+
+- [setuptools - "Development Mode"](https://setuptools.readthedocs.io/en/latest/userguide/development_mode.html)
+- [setuptools](https://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode)
+
+ローカルプロジェクト，または Git などの VCS で管理されたプロジェクトをエディタブルモードでインストールすることができる．
+
+```sh
+pip install -e path/to/SomeProject
+pip install -e git+http://repo/my_project.git#egg=SomeProject
+```
+
+ローカルプロジェクトのために，`SomeProject.egg-info` というディレクトリが，プロジェクトルートからの相対パスで作成される．これは，単に `setup.py develop` コマンドを使うよりも利点がある．というのも，`setup.py develop` コマンドでは，現在の作業ディレクトリにから直接相対的に "egg-info" ディレクトリが作られるからである．
+
+ややこしい日本語だが，
+
+- `pip install -e path/to/SomeProject`
+  - 渡したプロジェクトパスのルートからの相対パスで "egg-info" ディレクトリが作成される
+- `setup.py develop`
+  - 現在の作業ディレクトリに "egg-info" ディレクトリが作成される（プロジェクトルートに移動してからなら問題なさそう）
+
+### "regular" モードと "editable" モードの違い
+
+regular モードでインストールすると `sys.path` が更新されない．
+editable モード（setuptools の "development mode"）でインストールすると `sys.path` が更新される．実際には，現在の Python 処理系のデフォルトのパッケージインストールディレクトリ（["the installation-dependent default"](https://docs.python.org/3/tutorial/modules.html#importing-from-a-package) と呼ばれている）に置かれている `easy-install.pth` が更新される．つまり，`easy-install.pth` に指定したローカルプロジェクトのパスの行が追加される．
+
+<!-- TODO: 追加している部分の pip のソースコードを見たいね！！！！！！！！！！！！！！！ -->
+
+`.pth` は，1 行ごとにモジュールサーチパスに追加したいパスが記述されたテキストファイルであり，既にモジュールサーチパスに追加されているディレクトリに置くと，`.pth` に記述されたパスもサーチパスに追加してくれる．
+
+- `.pth` についてのリンク
+  - TODO
+
+例えば，筆者の手元の環境では，`/Users/pyteyon/.anyenv/envs/pyenv/versions/3.9.0/lib/python3.9/site-packages/easy-install.pth` が存在しており，"editable" モードでのインストールの度にこのファイルが更新される．
+
+> To do this, use the setup.py develop command. It works very similarly to setup.py install, except that it doesn’t actually install anything. Instead, it creates a special .egg-link file in the deployment directory, that links to your project’s source code. And, if your deployment directory is Python’s site-packages directory, it will also update the easy-install.pth file to include your project’s source code, thereby making it available on sys.path for all programs using that Python installation.
+
+（引用元：[setuptools - "Development Mode"](https://setuptools.readthedocs.io/en/latest/userguide/development_mode.html)）
+
+- [sys.path](https://docs.python.org/ja/3/library/sys.html#sys.path)
+
+以下，regular / editable モードの違い：
+
+- regular モード
+  - 指定したローカルプロジェクトのソースコードが現在の Python（処理系）の `site-packages` にコピーされる
+  - `egg-info` ディレクトリが現在の Python（処理系）の `site-packages` に作成される
+  - `sys.path` は更新されない
+- editable
+  - 指定したローカルプロジェクトのソースコードが現在の Python（処理系）の `site-packages` にコピーされない
+  - `egg-info` ディレクトリが，指定したローカルプロジェクトのルートディレクトリに作成される
+  - ローカルプロジェクトのディレクトリが `sys.path` に追加される
+
+```sh
+# regular モード
+$ pip install ./hello
+Processing ./hello
+Using legacy 'setup.py install' for hello, since package 'wheel' is not installed.
+Installing collected packages: hello
+    Running setup.py install for hello ... done
+Successfully installed hello-0.1
+
+$ pip show hello
+Name: hello
+Version: 0.1
+Summary: UNKNOWN
+Home-page: UNKNOWN
+Author: UNKNOWN
+Author-email: UNKNOWN
+License: UNKNOWN
+Location: /Users/pyteyon/.anyenv/envs/pyenv/versions/3.9.0/lib/python3.9/site-packages
+Requires:
+Required-by:
+
+pyteyon in ~/Projects/playground on  fix-typo-in-docs [U] via 🐏 33GiB/33GiB | 2GiB/2GiB on AWS Region: (ap-northeast-1) at 🗓  2021/01/10 06:14:38
+➜
+
+# uninstall
+pip uninstall hello -y
+Found existing installation: hello 0.1
+Uninstalling hello-0.1:
+  Successfully uninstalled hello-0.1
+
+$ pip install -e ./hello
+Obtaining file:///Users/pyteyon/Projects/playground/hello
+Installing collected packages: hello
+  Running setup.py develop for hello
+Successfully installed hello
+
+pyteyon in ~/Projects/playground on  fix-typo-in-docs [U] via 🐏 33GiB/33GiB | 2GiB/2GiB on AWS Region: (ap-northeast-1) at 🗓  2021/01/10 06:13:44
+➜ pip show hello
+Name: hello
+Version: 0.1
+Summary: UNKNOWN
+Home-page: UNKNOWN
+Author: UNKNOWN
+Author-email: UNKNOWN
+License: UNKNOWN
+Location: /Users/pyteyon/Projects/playground/hello
+Requires:
+Required-by:
+```
 
 ## パッケージの配布に関するリンク
 
@@ -101,6 +237,21 @@ Python で書かれたソフトウェアの配布フォーマットは大きく 
   - 標準のパッケージングツール、関連するメタデータとファイルフォーマット標準の保守と発展を担っている、開発者・ドキュメントの著者のグループです。彼らは様々なツールやドキュメント、issue tracker を GitHub と Bitbucket の両方で管理しています。
 
 ## 参考
+
+### 公式
+
+- Python 言語リファレンス
+  - [5. インポートシステム](https://docs.python.org/ja/3/reference/import.html)
+- pip
+  - リファレンス
+    - [pip install - Local project installs](https://pip.pypa.io/en/stable/reference/pip_install/#local-project-installs)
+  - pip コマンドの実装
+    - [`pip install` の実装](https://github.com/pypa/pip/blob/master/src/pip/_internal/commands/install.py)
+  - [`pip install -e` の実装](https://github.com/pypa/pip/blob/master/src/pip/_internal/cli/cmdoptions.py#L411:1)
+- setuptools
+  - [Building and Distributing Packages with Setuptools](https://setuptools.readthedocs.io/en/latest/setuptools.html#development-mode)
+
+### 記事
 
 - [【Python】pip と wheel](https://qiita.com/kenta1984/items/16a14f3bfaf1f257c585)
 - [Python パッケージ管理技術まとめ (pip, setuptools, easy_install, etc)](https://www.yunabe.jp/docs/python_package_management.html)
