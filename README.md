@@ -71,3 +71,9 @@ Markdown ファイルを編集して、GitHub リポジトリに push すると�
 ダッシュボードから手動で行う。安全のため、GitHub の `articles` ディレクトリから Markdown ファイルを削除しても、zenn.dev 上では削除されない。
 
 - [Zenn: Dashboard](https://zenn.dev/dashboard)
+
+## その他
+
+### Markdown のリンター
+
+Markdown のリンターとして、VSCode 拡張の [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) を使用している。リポジトリルートに置いてある `.markdownlint.yml` を編集することで適用するルールを設定できる。
