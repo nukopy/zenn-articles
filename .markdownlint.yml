@@ -1,5 +1,5 @@
-MD013:
+MD013: # Max Line length
   line_length: 200
-MD024: false
-MD026: false
-MD034: false
+MD024: false # Multiple headers with the same content
+MD026: false # Trailing punctuation in header
+MD034: false # No bare URLs
