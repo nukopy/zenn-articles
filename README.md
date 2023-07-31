@@ -27,10 +27,24 @@ zenn init
 
 ref: [Zenn CLI で記事・本を管理する方法](https://zenn.dev/zenn/articles/zenn-cli-guide)
 
-### 記事の作成
+### 記事、本の作成
+
+- 記事の作成
 
 ```sh
 zenn new:article
+```
+
+- 本の作成
+  - `config.yaml` と章を表す Markdown ファイルが作成される
+
+```sh
+zenn new:book
+
+# 出力例
+# created: books/f37359fc0c162c/config.yaml
+# created: books/f37359fc0c162c/example1.md
+# created: books/f37359fc0c162c/example2.md
 ```
 
 ### 記事をローカルでプレビューする
