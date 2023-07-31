@@ -1,0 +1,13 @@
+title: "概念を理解しながら作る自作 OS with Rust"
+summary: ""
+topics: ["OS", "Rust", "自作OS", "低レイヤ"]
+published: false
+price: 0 # 有料の場合200〜5000
+# 本に含めるチャプターを順番に並べましょう
+chapters:
+  - 01_beginning
+  - 02_os_overview
+  - 03_os_functions
+  - 0x_file_system_concept
+  - 0x_file_system_impl
+  - references
