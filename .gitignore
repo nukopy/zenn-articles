@@ -1,4 +1,9 @@
-# Node / JavaScript
+## Local
+.envrc
+.vscode
+*.code-workspace
+
+## Node / JavaScript
 # Logs
 logs
 *.log
