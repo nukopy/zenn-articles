@@ -68,6 +68,14 @@ https://twitter.com/publickey/status/1278352737160159232?s=20
 
 エッジ環境も行ってしまえばサーバーレス環境なのですが、
 
+- (2023/01, Zenn) Vercel から MySQL/PostgreSQL に接続したい場合にどういうアーキテクチャにするのが最適か
+
+https://zenn.dev/laiso/scraps/595d631fe19ef5
+
+- (2023/05, Zenn) Vercel Postgres がどうやって Edge Runtime で ORM とコネクションプールを使えるようにしているのか
+
+https://zenn.dev/laiso/articles/542fdfac2acb6b
+
 #### 結論
 
 ### コネクションプールは必要？不必要？
@@ -82,7 +90,9 @@ https://togetter.com/li/558788
 
 #### 結論
 
-### NoSQL におけるコネクションプーリング
+### NoSQL におけるコネクションプーリング：MongoDB の例
+
+https://www.mongodb.com/docs/manual/administration/connection-pool-overview/
 
 ## 終わりに
 
