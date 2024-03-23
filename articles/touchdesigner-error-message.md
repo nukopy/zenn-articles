@@ -1,6 +1,6 @@
 ---
 title: "TouchDesigner のエラーメッセージをコピペできない問題を解決する" # 記事のタイトル
-emoji: "🚨" # アイキャッチとして使われる絵文字（1 文字だけ）
+emoji: "🚑" # アイキャッチとして使われる絵文字（1 文字だけ）
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["touchdesigner"]
 published: true # 公開設定（false にすると下書き）
