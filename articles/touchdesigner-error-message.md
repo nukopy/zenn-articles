@@ -149,15 +149,28 @@ python >>> error1[3, 1]
 
 Error DAT のテーブルの操作は、Error DAT クラスの公式ドキュメントの [ACCESSING TABLE CONTENT](https://derivative.ca/UserGuide/ErrorDAT_Class#:~:text=ACCESSING%20TABLE%20CONTENT) を参照するとよい。
 
-## おまけ：Error DAT
+## おまけ: Error DAT クラスについて
 
-Error DAT クラスのドキュメント
+### Error DAT クラスの型
+
+`error1` は Error DAT クラス `td.errorDAT` のインスタンスである。
+
+```python
+python >>> error1 = op("/project1/error1")
+python >>> type(error1)
+<class 'td.errorDAT'>
+```
+
+Error DAT クラスの公式ドキュメント[^2]
 
 https://derivative.ca/UserGuide/ErrorDAT_Class
 
-Error DAT で使えるメソッドリスト
+[^2]: Wiki 形式の https://docs.derivative.ca/ErrorDAT_Class という `docs.derivative.ca` というサブドメインのドキュメントは最新更新が 2018 年なので古い可能性があるので注意。
+
+### Error DAT クラスのインスタンスで使用できるメソッドリスト
 
 ```python
+python >>> error1 = op("/project1/error1")
 python >>> error1.__dir__()
 ['__init__', '__new__', '__doc__', 'type', 'label', 'icon', 'family', 'OPType', 'opType', 'isFilter', 'isCustom', 'subType', 'minInputs', 'maxInputs', 'isMultiInputs', 'visibleLevel', 'supported', 'licenseType', '__getitem__', '__setitem__', '__delitem__', 'run', 'write', 'flush', 'isatty', 'setSize', 'clear', 'copy', 'row', 'col', 'rows', 'cols', 'appendRow', 'appendRows', 'appendCol', 'appendCols', 'insertRow', 'insertCol', 'replaceRow', 'replaceCol', 'deleteRow', 'deleteRows', 'deleteCol', 'deleteCols', 'cell', 'cells', 'save', 'findCell', 'findCells', 'scroll', 'detectLanguage', 'export', 'text', 'jsonObject', 'module', 'numRows', 'numCols', 'locals', 'isTable', 'isText', 'isEditable', 'editingFile', '__repr__', '__hash__', '__str__', '__getattribute__', '__setattr__', '__delattr__', '__lt__', '__le__', '__eq__', '__ne__', '__gt__', '__ge__', '__add__', '__radd__', '__mul__', '__rmul__', '__bool__', 'copyParameters', 'ops', 'setInputs', 'pars', 'evalExpression', 'fetch', 'fetchOwner', 'store', 'unstore', 'storeStartupValue', 'unstoreStartupValue', 'cook', 'changeType', 'destroy', 'relativePath', 'shortcutPath', 'resetNodeSize', 'openViewer', 'closeViewer', 'resetViewer', 'openParameters', 'openMenu', 'var', 'warnings', 'errors', 'scriptErrors', 'addScriptError', 'addError', 'addWarning', 'clearScriptErrors', 'dependenciesTo', 'childrenCPUMemory', 'childrenGPUMemory', '__getstate__', '__setstate__', 'id', 'passive', 'op', 'parent', 'iop', 'ipar', 'valid', 'curPar', 'currentPage', 'name', 'path', 'digits', 'base', 'children', 'numChildren', 'recursiveChildren', 'numChildrenRecursive', 'time', 'color', 'storage', 'par', 'parGroup', 'pages', 'builtinPars', 'customPars', 'customPages', 'customTuplets', 'customParGroups', 'comment', 'tags', 'mod', 'warning', 'error', 'inputs', 'outputs', 'inputConnectors', 'outputConnectors', 'ext', 'replicator', 'nodeX', 'nodeY', 'nodeWidth', 'nodeHeight', 'nodeCenterX', 'nodeCenterY', 'dock', 'docked', 'display', 'render', 'viewer', 'activeViewer', 'lock', 'selected', 'python', 'current', 'bypass', 'expose', 'cloneImmune', 'showDocked', 'showCustomOnly', 'allowCooking', 'isCOMP', 'isBase', 'isObject', 'isPanel', 'isTOP', 'isCHOP', 'isSOP', 'isMAT', 'isDAT', 'totalCooks', 'cookFrame', 'cpuCookTime', 'gpuCookTime', 'cookAbsFrame', 'cookStartTime', 'cookEndTime', 'cookedThisFrame', 'cookedPreviousFrame', 'cpuMemory', 'gpuMemory', 'childrenCPUCookTime', 'childrenCPUCookAbsFrame', 'childrenGPUCookTime', 'childrenGPUCookAbsFrame', 'childrenCookTime', 'childrenCookAbsFrame', 'cookTime', '__reduce_ex__', '__reduce__', '__subclasshook__', '__init_subclass__', '__format__', '__sizeof__', '__dir__', '__class__']
 ```
