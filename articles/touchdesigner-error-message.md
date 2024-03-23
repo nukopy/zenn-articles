@@ -22,7 +22,7 @@ TouchDesigner のプロジェクトにて、特定のノードでエラーが起
 - OS: macOS Sonoma 14.1
 - TouchDesigner: 2022.33910 (NON-COMMERCIAL)
 
-## 解決策
+## 解決策の概要
 
 解決策は以下の 2 つ：
 
@@ -117,7 +117,7 @@ Error DAT は、プロジェクト内の各ノードで起きたエラーを拾�
 
 Textport で Error DAT のノードの参照を取得して、そのテーブルの中のエラーメッセージを出力したい[^1]。そのためにまずは Textport を開く。
 
-Textport の開き方は[解決策 1 で先述した通り](#1-メニューバー--dialogs--textport-and-dats-から-textport-を開く)。
+Textport の開き方は[解決策 1 で先述した通り](#1.-メニューバー->-dialogs->-textport-and-dats-から-textport-を開く)。
 
 [^1]: Error DAT のコールバック定義用の Text DAT を使用してログを吐き出すのも良いが、Textport で直接エラーメッセージを取得する方法の方が楽。
 
@@ -150,7 +150,7 @@ op のテーブル操作は、Error DAT クラスの公式ドキュメントの 
 
 ![](https://storage.googleapis.com/zenn-user-upload/9119dec6758d-20240324.png)
 
-## misc
+## おまけ：Error DAT
 
 Error DAT クラスのドキュメント
 
