@@ -75,10 +75,13 @@ TypeError: float() argument must be a string or a number, not 'td.nullCHOP'
 ```
 
 :::message
-Textport ではノードのフルパスを指定しないとプロジェクト内の `op` にアクセスできなかった。
+Textport の環境では、ノードのフルパスを指定しないと `op` 関数でプロジェクト内のノードにアクセスできなかった。上記の例では、`op("null1")` ではなく、`op("/project1/null1")` としないとノードの参照が取得できない。
 
-上記の例では、`op("null1")` ではなく、`op("/project1/null1")` としないとノードの参照が取得できなかった。
+ノードのフルパスを確認するには、ノードのパラメータウィンドウの `i` ボタンを押し、ノード情報のポップアップの一番上の `Name` の値を見れば良い。
+
+![](https://storage.googleapis.com/zenn-user-upload/9119dec6758d-20240324.png)
 :::
+
 
 ## 解決策 2: Error DAT と Textport を使用してコピペ可能なエラーメッセージを取得する
 
@@ -103,9 +106,9 @@ OP Create Dialog から Error DAT を作る。
 
 ### 2. プロジェクト内のエラーが Error DAT のテーブルに自動で追加される
 
-Error DAT は、プロジェクト内の各ノードで起きたエラーを拾って、自動でテーブル形式のデータとして整理して扱えるようにしてくれるノード。
+Error DAT は、プロジェクト内の各ノードで起きたエラーを拾い、自動でテーブル形式のデータとしてプログラムから扱えるようにしてくれるノードである。
 
-ちなみに、Error DAT を作ると同時に、エラーが起きたときのコールバックを定義する用の Text DAT（TouchDesigner 内で Python スクリプトを実行できるノード）が生成され、作成した Error DAT に自動で紐づけられる（下記画像内の `error1_callbacks` という Text DAT）。
+ちなみに、Error DAT を作ると同時に、エラーが起きたときのコールバックを定義するための Text DAT（TouchDesigner 内で Python スクリプトを実行できるノード）が生成され、作成した Error DAT に自動で紐づけられる（下記画像内の `error1_callbacks` という Text DAT）。
 
 ![](https://storage.googleapis.com/zenn-user-upload/c8f62d0f1504-20240324.png)
 *Error DAT を追加したときのノードエディタの様子*
@@ -115,11 +118,11 @@ Error DAT は、プロジェクト内の各ノードで起きたエラーを拾�
 
 ### 3. メニューバー > Dialogs > Textport and DATs から Textport を開く
 
-Textport で Error DAT のノードの参照を取得して、そのテーブルの中のエラーメッセージを出力したい[^1]。そのためにまずは Textport を開く。
+Textport で Error DAT のノードの参照を取得し、そのテーブルの中のエラーメッセージを出力したい[^1]。そのためにまずは Textport を開く。
 
 Textport の開き方は[解決策 1 で先述した通り](#1.-メニューバー->-dialogs->-textport-and-dats-から-textport-を開く)。
 
-[^1]: Error DAT のコールバック定義用の Text DAT を使用してログを吐き出すのも良いが、Textport で直接エラーメッセージを取得する方法の方が楽。
+[^1]: Error DAT のコールバック定義用の Text DAT を使用してエラーメッセージをログとして吐き出すのも良いが、Textport で直接エラーメッセージを取得する方法の方が楽。
 
 ### 4. Error DAT のテーブルからコピーしたいエラーメッセージを見つけ、Textport でその内容を出力する
 
@@ -144,11 +147,7 @@ python >>> error1[3, 1]
 
 これで**コピペ可能なエラーメッセージが出力できるようになった**。
 
-op のテーブル操作は、Error DAT クラスの公式ドキュメントの [ACCESSING TABLE CONTENT](https://derivative.ca/UserGuide/ErrorDAT_Class#:~:text=ACCESSING%20TABLE%20CONTENT) を参照するとよい。
-
-ノードのフルパスを取得するには、パラメータウィンドウの `i` ボタンを押してノードの情報を表示するとよい
-
-![](https://storage.googleapis.com/zenn-user-upload/9119dec6758d-20240324.png)
+Error DAT のテーブル操作は、Error DAT クラスの公式ドキュメントの [ACCESSING TABLE CONTENT](https://derivative.ca/UserGuide/ErrorDAT_Class#:~:text=ACCESSING%20TABLE%20CONTENT) を参照するとよい。
 
 ## おまけ：Error DAT
 
@@ -165,11 +164,11 @@ python >>> error1.__dir__()
 
 ## 終わりに
 
-エラーメッセージがコピペできないのはプログラミングをする上で致命的だったので方法を調査してまとめてみた
+エラーメッセージがコピペできないのはプログラミングをする上で致命的だったので、慣れない TouchDesigner と戦いながら調査してまとめてみた。まだまだ探り探りだけど、少しずつ慣れていければと思う。
 
-解決策 2 を一通りまとめたあとに、`error1.__dir__()` を試しに実行してみたら `errors` というメソッドが見つかり、解決策 1 が見つかった。こういうのあるあるだよね。どこかで Error DAT を使いこなす必要が来れば今回の調査が報われることでしょう。
+解決策 2 を一通りまとめたあとに、`error1.__dir__()` を試しに実行してみたら `errors` というメソッドが見つかり、より簡単な解決策 1 が見つかったのは嬉しいような悲しいような。どこかで Error DAT を使いこなす必要が来れば、自分でこの記事に戻ってきて今回の調査が報われることでしょう。
 
-最後まで読んでくださりありがとうございました。
+もっと楽な方法あるよとかあれば教えてくださると嬉しいです。最後まで読んでくださりありがとうございました。
 
 ## 参考
 
