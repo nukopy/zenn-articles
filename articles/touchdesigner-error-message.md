@@ -79,7 +79,7 @@ Textport の環境では、ノードのフルパスを指定しないと `op` �
 
 ノードのフルパスを確認するには、ノードのパラメータウィンドウの `i` ボタンを押し、ノード情報のポップアップの一番上の `Name` の値を見れば良い。
 
-![](https://storage.googleapis.com/zenn-user-upload/9119dec6758d-20240324.png)
+![](https://storage.googleapis.com/zenn-user-upload/c00b51bfdfa9-20240324.png)
 :::
 
 
