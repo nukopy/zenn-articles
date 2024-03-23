@@ -133,7 +133,7 @@ Textport を開いたら、`op` 関数を使用して Error DAT の参照を取�
 ![](https://storage.googleapis.com/zenn-user-upload/7b3639d288ca-20240324.png)
 *Error DAT のテーブルデータ*
 
-- 目的のエラーメッセージ（テーブル 3 行目、1 列）のエラーメッセージを取得するコマンド
+- 目的のエラーメッセージ（テーブル 3 行目、1 列）を取得するコマンド
 
 ```python
 python >>> error1 = op("/project1/error1")
@@ -147,7 +147,7 @@ python >>> error1[3, 1]
 
 これで**コピペ可能なエラーメッセージが出力できるようになった**。
 
-Error DAT のテーブル操作は、Error DAT クラスの公式ドキュメントの [ACCESSING TABLE CONTENT](https://derivative.ca/UserGuide/ErrorDAT_Class#:~:text=ACCESSING%20TABLE%20CONTENT) を参照するとよい。
+Error DAT のテーブルの操作は、Error DAT クラスの公式ドキュメントの [ACCESSING TABLE CONTENT](https://derivative.ca/UserGuide/ErrorDAT_Class#:~:text=ACCESSING%20TABLE%20CONTENT) を参照するとよい。
 
 ## おまけ：Error DAT
 
