@@ -165,7 +165,7 @@ Error DAT クラスの公式ドキュメント[^2]
 
 https://derivative.ca/UserGuide/ErrorDAT_Class
 
-[^2]: Wiki 形式の https://docs.derivative.ca/ErrorDAT_Class という `docs.derivative.ca` というサブドメインのドキュメントは最新更新が 2018 年なので古い可能性があるので注意。
+[^2]: https://docs.derivative.ca/ErrorDAT_Class のような `docs.derivative.ca` というサブドメインを使用している公式ドキュメントは最新更新が 2018 年で、情報が古い可能性があるので注意。
 
 ### Error DAT クラスのインスタンスで使用できるメソッドリスト
 
