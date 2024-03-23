@@ -151,7 +151,7 @@ Error DAT のテーブルの操作は、Error DAT クラスの公式ドキュメ
 
 ## おまけ: Error DAT クラスについて
 
-### Error DAT クラスの型
+### Error DAT クラス `td.errorDAT`
 
 `error1` は Error DAT クラス `td.errorDAT` のインスタンスである。
 
