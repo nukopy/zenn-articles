@@ -1,5 +1,12 @@
 {
+  "scripts": {
+    "init:biome": "biome init",
+    "dev": "zenn preview"
+  },
   "dependencies": {
-    "zenn-cli": "^0.1.153"
+    "zenn-cli": "^0.1.157"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.2"
   }
 }
