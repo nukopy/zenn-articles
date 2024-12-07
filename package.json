@@ -1,6 +1,8 @@
 {
   "scripts": {
     "init:biome": "biome init",
+    "new:article": "zenn new:article",
+    "new:book": "zenn new:book",
     "dev": "zenn preview"
   },
   "dependencies": {
